@@ -6,7 +6,7 @@ import streamlit as st
 from astropy.io import fits
 
 st.set_page_config(layout='wide')
-directory = r'data/'
+directory = r'epsc2023/data/'
 
 with st.sidebar:
 
