@@ -1,14 +1,3 @@
-[global]
-dataFrameSerialization = "arrow"
-
-[server]
-maxMessageSize = 500
-enableWebsocketCompression = true
-
-[browser]
-serverAddress = "ultron"
-gatherUsageStats = false
-
 [theme]
 # Catppuccin Latte Maroon
 primaryColor="#e64553"
