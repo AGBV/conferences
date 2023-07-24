@@ -141,76 +141,10 @@ axs[2,2].set_title('Intercept')
 
 for i in range(rows):
     for j in range(cols):
-        # axs[i,j].set_yticklabels([])
-        # axs[i,j].set_xticklabels([])
         axs[i,j].set_xticks([])
         axs[i,j].set_yticks([])
 
 plt.tight_layout()
 fig_html = mpld3.fig_to_html(fig)
 components.html(fig_html, height=1200, scrolling=True)
-# st.pyplot(fig)
-
-# import plotly.graph_objects as go
-# from plotly.subplots import make_subplots
-# fig = make_subplots(
-#     rows=3, 
-#     cols=2, 
-#     subplot_titles=('WAC', 'Polarimetry (Intensity)', ref_or_alb.title(), 'Polarimetry (DoLP)', f'{ref_or_alb.title()}-DoLP Slopes', 'Polarimetry (AoLP)'),
-#     # row_heights=[0.3, 0.3, 0.3],
-#     # column_widths=[0.45, 0.45],
-#     vertical_spacing=0.05,
-#     horizontal_spacing=0.001,
-#     # print_grid=True,
-   
-#     shared_xaxes=True,
-#     shared_yaxes=True,
-# )
-# fig.add_trace(
-#     go.Heatmap(
-#         z=wac,
-#         colorscale='gray',
-#     ), row=1, col=1
-# )
-
-# fig.add_trace(
-#     go.Heatmap(
-#         z=intensity,
-#         colorscale='gray',
-#     ), row=1, col=2
-# )
-# fig.add_trace(
-#     go.Heatmap(
-#         z=comparisson,
-#         colorscale='jet',
-#     ), row=2, col=1
-# )
-# fig.add_trace(
-#     go.Heatmap(
-#         z=dolp,
-#         colorscale='jet',
-#     ), row=2, col=2
-# )
-# fig.add_trace(
-#     go.Heatmap(
-#         z=slope,
-#         # z=intercept,
-#         colorscale='jet',
-#     ), row=3, col=1
-# )
-# fig.add_trace(
-#     go.Heatmap(
-#         z=aolp,
-#         colorscale='jet',
-#     ), row=3, col=2
-# )
-
-# fig.update_traces(showscale=False)
-# for i in range(3):
-#     for j in range(2):
-#         fig.update_xaxes(scaleanchor='x5', scaleratio=1)
-#         fig.update_yaxes(scaleanchor='x', scaleratio=1, showgrid=False, row=i+1, col=j+1)
-# fig.update_layout(
-#     height=1200,
-# )
-# st.plotly_chart(fig, use_container_width=True)
+st.info('**Note:** hover to the lower left corner for zoom and pan tools.')
