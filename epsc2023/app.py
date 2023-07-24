@@ -24,7 +24,6 @@ with st.sidebar:
 
     file_path = form.selectbox('Choose a polarimetry file:', sorted(files), 0, lambda x: x.split('/')[-1])
     data = fetch_fits_from_server(file_path)
-    print(data['intensity'].header)
     for i in range(len(data)):
         if (i > 0) and (data[i].header['XTENSION'] == 'BINTABLE'):
             continue
