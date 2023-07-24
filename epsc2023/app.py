@@ -146,5 +146,5 @@ for i in range(rows):
 
 plt.tight_layout()
 fig_html = mpld3.fig_to_html(fig)
-components.html(fig_html, height=1000, scrolling=True)
+components.html(fig_html, height=1050, scrolling=True)
 st.info('**Note:** hover to the bottom left corner for zoom and pan tools.')
