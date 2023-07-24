@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 st.set_page_config(layout='wide')
 url = 'https://web.bv.e-technik.tu-dortmund.de/conferences/2023/epsc/'
 
-@st.cache_resource()
+# @st.cache_resource()
 def fetch_fits_from_server(url):
     data = fits.open(url)
     return data
