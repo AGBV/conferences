@@ -19,6 +19,7 @@ with st.sidebar:
     form = st.form('options')
 
     page = requests.get(url).text
+    st.write(page)
     soup = BeautifulSoup(page, 'html.parser')
     files = [url + node.get('href') for node in soup.find_all('a', href=True) if node.get('href').endswith('.fits')]
     st.write(files)
