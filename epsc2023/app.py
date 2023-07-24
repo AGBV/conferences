@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 st.set_page_config(layout='wide')
 url = 'https://web.bv.e-technik.tu-dortmund.de/conferences/2023/epsc/'
 
-# @st.cache_resource()
+@st.cache_resource()
 def fetch_fits_from_server(url):
     data = fits.open(url)
     return data
@@ -19,10 +19,8 @@ with st.sidebar:
     form = st.form('options')
 
     page = requests.get(url).text
-    st.write(page)
     soup = BeautifulSoup(page, 'html.parser')
     files = [url + node.get('href') for node in soup.find_all('a', href=True) if node.get('href').endswith('.fits')]
-    st.write(files)
 
     file_path = form.selectbox('Choose a polarimetry file:', sorted(files), 0, lambda x: x.split('/')[-1])
     data = fetch_fits_from_server(file_path)
@@ -40,8 +38,8 @@ with st.sidebar:
     wavelenghts_pol_select = form.selectbox('Select wavelength', wavelenghts_pol, wavelenghts_pol.size-1, lambda x: f'{x:.2f} μm')
     wavelenghts_pol_idx = np.where(wavelenghts_pol == wavelenghts_pol_select)[0][0]
 
-    percentile = form.checkbox('Percentiles of data', False, help='Only affects the DoLP and AoLP data displayed!')
-    mask_slope = form.checkbox('Display only "full" channel data', False, help='Global invalid channels are filtered for first')
+    percentile = form.checkbox('Percentiles of data', True, help='Only affects the DoLP and AoLP data displayed!')
+    mask_slope = form.checkbox('Display only "full" channel data', True, help='Global invalid channels are filtered for first')
     ref_or_alb = form.selectbox('Reflectance or Albedo?', ['reflectance', 'albedo'], 0, lambda x: x.title())
 
     submitted = form.form_submit_button('Submit Changes')
