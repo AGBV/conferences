@@ -11,7 +11,6 @@ url = 'https://web.bv.e-technik.tu-dortmund.de/conferences/2023/epsc/'
 
 # @st.cache_resource()
 def fetch_fits_from_server(url):
-    print(url)
     data = fits.open(url)
     return data
 
@@ -22,7 +21,7 @@ with st.sidebar:
     page = requests.get(url).text
     soup = BeautifulSoup(page, 'html.parser')
     files = [url + node.get('href') for node in soup.find_all('a', href=True) if node.get('href').endswith('.fits')]
-    print(files)
+    st.write(files)
 
     file_path = form.selectbox('Choose a polarimetry file:', sorted(files), 0, lambda x: x.split('/')[-1])
     data = fetch_fits_from_server(file_path)
