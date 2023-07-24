@@ -1,19 +1,31 @@
 import datetime
-from glob import glob
+import requests
 
 import numpy as np
 import streamlit as st
 from astropy.io import fits
+from bs4 import BeautifulSoup
 
 st.set_page_config(layout='wide')
-directory = r'epsc2023/data/'
+url = 'https://web.bv.e-technik.tu-dortmund.de/conferences/2023/epsc/'
+
+@st.cache_resource()
+def fetch_fits_from_server(url):
+    data = fits.open(url)
+    return data
 
 with st.sidebar:
 
     form = st.form('options')
 
-    file_path = form.selectbox('Choose a polarimetry file:', sorted(glob(directory + '*.fits')), 0, lambda x: x.split('/')[-1])
-    data = fits.open(file_path)
+    page = requests.get(url).text
+    soup = BeautifulSoup(page, 'html.parser')
+    files = [url + node.get('href') for node in soup.find_all('a', href=True) if node.get('href').endswith('.fits')]
+    print(files)
+
+    file_path = form.selectbox('Choose a polarimetry file:', sorted(files), 0, lambda x: x.split('/')[-1])
+    data = fetch_fits_from_server(file_path)
+    print(data['intensity'].header)
     for i in range(len(data)):
         if (i > 0) and (data[i].header['XTENSION'] == 'BINTABLE'):
             continue
@@ -37,6 +49,7 @@ with st.sidebar:
 st.write('Date:', timestamp.date(), ' - Time:', timestamp.time(), ' - Time zone:', timestamp.tzinfo)
 st.write('Latitude:', latitude, ' - Longitude:', longitude)
 st.write('Phase angle:', phase_angle, '°')
+st.write('Region: ', data['intensity'].header['region'].title())
 
 wac         = data['primary'].data
 intensity   = data['intensity'].data[wavelenghts_pol_idx, :, :]
@@ -137,7 +150,7 @@ for i in range(rows):
 
 plt.tight_layout()
 fig_html = mpld3.fig_to_html(fig)
-components.html(fig_html, height=1200)
+components.html(fig_html, height=1200, scrolling=True)
 # st.pyplot(fig)
 
 # import plotly.graph_objects as go

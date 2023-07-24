@@ -2,4 +2,5 @@ numpy
 astropy
 matplotlib
 mpld3
+beautifulsoup4
 streamlit
