@@ -11,6 +11,7 @@ url = 'https://web.bv.e-technik.tu-dortmund.de/conferences/2023/epsc/'
 
 # @st.cache_resource()
 def fetch_fits_from_server(url):
+    print(url)
     data = fits.open(url)
     return data
 
