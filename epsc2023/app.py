@@ -39,7 +39,8 @@ with st.sidebar:
 
     percentile = form.checkbox('Percentiles of data', True, help='Only affects the DoLP and AoLP data displayed!')
     mask_slope = form.checkbox('Display only "full" channel data', True, help='Global invalid channels are filtered for first')
-    ref_or_alb = form.selectbox('Reflectance or Albedo?', ['reflectance', 'albedo'], 0, lambda x: x.title())
+    # ref_or_alb = form.selectbox('Reflectance or Albedo?', ['reflectance', 'albedo'], 0, lambda x: x.title())
+    ref_or_alb = 'reflectance'
 
     submitted = form.form_submit_button('Submit Changes')
 
@@ -109,6 +110,19 @@ if percentile:
 
     # slope[slope < np.nanpercentile(slope, 1)]  = np.nan
     # slope[slope > np.nanpercentile(slope, 99)] = np.nan
+
+wac         = np.rot90(wac,         2)
+intensity   = np.rot90(intensity,   2)
+comparisson = np.rot90(comparisson, 2)
+dolp        = np.rot90(dolp,        2)
+aolp        = np.rot90(aolp,        2)
+slope       = np.rot90(slope,       2)
+intercept   = np.rot90(intercept,   2)
+clusters    = np.rot90(clusters,    2)
+grain_size  = np.rot90(grain_size,  2)
+
+intensity = intensity.astype(float)
+intensity[intensity < 1e-12] = np.nan
 
 import matplotlib.pyplot as plt
 import mpld3
