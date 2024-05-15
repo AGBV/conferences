@@ -10,7 +10,7 @@ from plotly.subplots import make_subplots
 from plotly import colors
 import plotly.graph_objects as go
 
-DATA_DIR = "out"
+DATA_DIR = "epsc2024/out"
 EXTENSION = "pbz2"
 CROSS_SECTION_SCALE = 1e6
 CMAP_TYPE = "Turbo"
@@ -297,7 +297,9 @@ fig.update_layout(
         tick0=0,
         dtick=45,
     ),
-    yaxis1=dict(title=f"Phase Function p(θ, λ = {wavelengths[manual_idx[0]] / 1e3}&mu;m)"),
+    yaxis1=dict(
+        title=f"Phase Function p(θ, λ = {wavelengths[manual_idx[0]] / 1e3}&mu;m)"
+    ),
     xaxis2=dict(
         title="Phase Angle",
         ticksuffix="°",
@@ -305,7 +307,9 @@ fig.update_layout(
         tick0=0,
         dtick=45,
     ),
-    yaxis2=dict(title=f"Phase Function p(θ, λ = {wavelengths[manual_idx[1]] / 1e3}&mu;m)"),
+    yaxis2=dict(
+        title=f"Phase Function p(θ, λ = {wavelengths[manual_idx[1]] / 1e3}&mu;m)"
+    ),
     xaxis3=dict(
         title="Phase Angle",
         ticksuffix="°",
@@ -313,7 +317,9 @@ fig.update_layout(
         tick0=0,
         dtick=45,
     ),
-    yaxis3=dict(title=f"Phase Function p(θ, λ = {wavelengths[manual_idx[2]] / 1e3}&mu;m)"),
+    yaxis3=dict(
+        title=f"Phase Function p(θ, λ = {wavelengths[manual_idx[2]] / 1e3}&mu;m)"
+    ),
 )
 st.plotly_chart(fig, use_container_width=True)
 
