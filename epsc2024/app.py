@@ -12,14 +12,17 @@ import pyvista as pv
 from stpyvista import stpyvista
 from stpyvista.utils import start_xvfb
 
+DATA_DIR = "epsc2024/out"
+EXTENSION = "pbz2"
 length_suffix = "μm"
 cross_section_scale = 1e6
 
 st.set_page_config(page_title="YASF", layout="wide")
 if "IS_XVFB_RUNNING" not in st.session_state:
-  pv.start_xvfb()
-  start_xvfb()
-  st.session_state.IS_XVFB_RUNNING = True 
+    pv.start_xvfb()
+    start_xvfb()
+    st.session_state.IS_XVFB_RUNNING = True
+
 
 # @st.cache
 def load_data(path):
@@ -31,9 +34,9 @@ def load_data(path):
 
 # st.title('Yet Another Scattering Framework')
 # st.header('Data visualizer of the LPSC 2023 abstract of Arnaut et al. [2997](https://www.hou.usra.edu/meetings/lpsc2023/pdf/2997.pdf)')
-data_file = "out/*.pbz2"
+data_file = f"{DATA_DIR}/*.{EXTENSION}"
 with st.sidebar:
-    path = r"out/*.pbz2"
+    path = rf"{DATA_DIR}/*.{EXTENSION}"
     files = glob.glob(path)
     data_file = st.selectbox("File", sorted(files), 0)
 
@@ -45,8 +48,12 @@ position = np.array(data["particles"]["position"])
 radii = np.array(data["particles"]["radii"])
 
 wavelength = np.array(data["wavelength"]["value"])
-scattering_cross_section = data["wavelength"]["data"]["scattering_cross_section"] * cross_section_scale**2
-extinction_cross_section = data["wavelength"]["data"]["extinction_cross_section"] * cross_section_scale**2
+scattering_cross_section = (
+    data["wavelength"]["data"]["scattering_cross_section"] * cross_section_scale**2
+)
+extinction_cross_section = (
+    data["wavelength"]["data"]["extinction_cross_section"] * cross_section_scale**2
+)
 single_scattering_albedo = data["wavelength"]["data"]["single_scattering_albedo"]
 
 sampling_points = np.array(data["field"]["sampling_points"]) * 1e-3
@@ -130,12 +137,12 @@ with st.container():
     with col1:
         position -= np.mean(position, axis=0)
         point_cloud = pv.PolyData(position)
-        point_cloud["radius"] = [2*i for i in radii]
+        point_cloud["radius"] = [2 * i for i in radii]
 
         geom = pv.Sphere(theta_resolution=8, phi_resolution=8)
         glyphed = point_cloud.glyph(scale="radius", geom=geom, orient=False)
         pl = pv.Plotter(window_size=[400, 400])
-        pl.add_mesh(glyphed, color='white',smooth_shading=True, pbr=True)
+        pl.add_mesh(glyphed, color="white", smooth_shading=True, pbr=True)
         pl.view_isometric()
         pl.link_views()
         stpyvista(pl)
