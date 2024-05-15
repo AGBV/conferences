@@ -133,7 +133,7 @@ with st.sidebar:
     plot_type = st.selectbox("Plot Type", plot_type_options.keys(), 0)
 
 with st.container():
-    col1, col2 = st.columns(2)
+    col1, col2 = st.columns([1, 2])
     with col1:
         position -= np.mean(position, axis=0)
         point_cloud = pv.PolyData(position)
